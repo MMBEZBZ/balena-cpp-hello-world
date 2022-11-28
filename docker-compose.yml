@@ -1,7 +1,10 @@
 version: "2"
-
+volumes:
+    image:
 services:
   balena-hello-world:
     build: .
-    ports:
-      - "80:80"
+    # ports:
+    #   - "80:80"
+    volumes:
+      - image:/face/image

@@ -1,14 +1,15 @@
-FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:bullseye-build
+# FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:bullseye-build
+FROM pachyderm/opencv:arm64
 
-WORKDIR /hello-world
+WORKDIR /face
 
 RUN install_packages gcc cmake libboost-context-dev libboost-dev curl libpq-dev cmake 
-RUN curl https://raw.githubusercontent.com/matt-42/lithium/master/install.sh | bash -s -
 
-COPY CMakeLists.txt .
-COPY src/ src/
-COPY views/ views/
+COPY face/ .
 
-RUN cmake -LH . && make
 
-CMD ["./my_api"]
+RUN mkdir build 
+RUN CD build 
+RUN cmake .. && make -j4
+
+CMD ["./LiveFaceReco"]
